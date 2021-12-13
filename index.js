@@ -95,7 +95,7 @@ app.delete("/posts/:id", (req, res) => {
   Post.findByIdAndDelete(id, (error, post) => {
     if (error) {
       // send error response
-      res.status(500).send({ error: "Unable to update post" });
+      res.status(500).send({ error: "Unable to delete post" });
     } else {
       // send success response
       res.status(200).send(post);
