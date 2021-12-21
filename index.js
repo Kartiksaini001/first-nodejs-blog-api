@@ -1,15 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 
 // Import models
 const Post = require("./src/models/post");
 
 // Define application
 const app = express();
-
-// Define DB Connection
-const db = mongoose.connect("mongodb://localhost:27017/first-node-api-db");
+dotenv.config();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -103,6 +102,17 @@ app.delete("/posts/:id", (req, res) => {
   });
 });
 
-app.listen(process.env.PORT || 3001, function () {
-  console.log("Server is running at port", process.env.PORT || 3001);
-});
+// Define PORT
+const PORT = process.env.PORT || 5000;
+
+// Define DB Connection
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() =>
+    app.listen(PORT, () => {
+      console.log(`MongoDB Connected and server running on port: ${PORT}`);
+    })
+  )
+  .catch((err) => {
+    console.log(err.message);
+  });
