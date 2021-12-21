@@ -103,6 +103,6 @@ app.delete("/posts/:id", (req, res) => {
   });
 });
 
-app.listen(3001, function () {
-  console.log("Server is running at port 3001....");
+app.listen(process.env.PORT || 3001, function () {
+  console.log("Server is running at port", process.env.PORT || 3001);
 });
